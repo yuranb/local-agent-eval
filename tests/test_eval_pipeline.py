@@ -73,10 +73,25 @@ def test_load_recordings_reads_directory(tmp_path):
 # --------------------------------------------------------------------------
 
 def test_run_eval_recording_backend_perfect_on_fixtures(tmp_path):
-    from evals.run_eval import DEFAULT_RECORDINGS
+    # Build fresh fixture recordings in a temp dir instead of reading
+    # evals/recordings/ — that directory holds real model recordings now,
+    # whose metrics are whatever the model actually achieved.
+    from evals.make_recordings import NOTE
+    import json as json_module
 
-    recordings = load_recordings(DEFAULT_RECORDINGS)
     cases = load_cases()
+    for case in cases:
+        payload = {
+            "case_id": case["id"],
+            "source": "fixture",
+            "note": NOTE,
+            "turns": build_turns(case),
+        }
+        (tmp_path / f"{case['id']}.json").write_text(
+            json_module.dumps(payload, ensure_ascii=False), encoding="utf-8"
+        )
+
+    recordings = load_recordings(tmp_path)
 
     def backend_for_case(case):
         rec = recordings[case["id"]]
