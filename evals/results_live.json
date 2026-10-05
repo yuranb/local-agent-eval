@@ -1,0 +1,793 @@
+{
+  "schema_version": 1,
+  "backend": "ollama",
+  "model": "qwen2.5:7b",
+  "timestamp": "2026-10-05T18:29:47.026481+00:00",
+  "metrics": {
+    "total_cases": 50,
+    "tool_selection_accuracy": 0.94,
+    "argument_accuracy": 0.55,
+    "answer_accuracy": 0.82,
+    "latency_ms_p50": 5974.5,
+    "latency_ms_p95": 16535.5
+  },
+  "cases": [
+    {
+      "id": "search-001",
+      "category": "search_docs",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": false,
+      "answer_ok": false,
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "The first words of the Gettysburg Address are \"The Gettysburg Address\".",
+      "error": null,
+      "latency_ms": 18835
+    },
+    {
+      "id": "search-002",
+      "category": "search_docs",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": false,
+      "answer_ok": true,
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "The Gettysburg Address was delivered on November 19, 1863.",
+      "error": null,
+      "latency_ms": 4219
+    },
+    {
+      "id": "search-003",
+      "category": "search_docs",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": false,
+      "answer_ok": false,
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "The three unalienable Rights listed in the Declaration of Independence excerpt are \"Life, Liberty, and the pursuit of Happiness.\"",
+      "error": null,
+      "latency_ms": 4933
+    },
+    {
+      "id": "search-004",
+      "category": "search_docs",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": false,
+      "answer_ok": true,
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "The date in the header of the Declaration of Independence excerpt is not directly mentioned in the snippets provided, but it is commonly known to be July 4, 1776.",
+      "error": null,
+      "latency_ms": 5114
+    },
+    {
+      "id": "search-005",
+      "category": "search_docs",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": false,
+      "answer_ok": false,
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "The first line of Shakespeare's Sonnet 18 is \"Sonnet 18\".",
+      "error": null,
+      "latency_ms": 4430
+    },
+    {
+      "id": "search-006",
+      "category": "search_docs",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": false,
+      "answer_ok": true,
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "According to Sonnet 18, thy eternal summer shall not fade.",
+      "error": null,
+      "latency_ms": 4410
+    },
+    {
+      "id": "search-007",
+      "category": "search_docs",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": false,
+      "answer_ok": true,
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "In the tortoise and hare fable, the Tortoise wins the race.",
+      "error": null,
+      "latency_ms": 4785
+    },
+    {
+      "id": "search-008",
+      "category": "search_docs",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": false,
+      "answer_ok": true,
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "In the fable, after giving up on reaching the grapes, the fox claims that the grapes were probably sour anyway.",
+      "error": null,
+      "latency_ms": 4968
+    },
+    {
+      "id": "search-009",
+      "category": "search_docs",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": false,
+      "answer_ok": true,
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "According to the excerpt from the Art of War, Sun Tzu said, \"The art of war is of vital importance to the State.\"",
+      "error": null,
+      "latency_ms": 6167
+    },
+    {
+      "id": "search-010",
+      "category": "search_docs",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": false,
+      "answer_ok": false,
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "The fifth of the five constant factors of war listed in the Art of War excerpt is \"The art of war, then is governed by five constant factors\".",
+      "error": null,
+      "latency_ms": 7074
+    },
+    {
+      "id": "search-011",
+      "category": "search_docs",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": false,
+      "answer_ok": true,
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "According to the documents, Darwin uses the phrase \"grandeur in this view of life\" to describe his perspective on life. This can be found in his work \"On the Origin of Species\".",
+      "error": null,
+      "latency_ms": 6411
+    },
+    {
+      "id": "search-012",
+      "category": "search_docs",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": false,
+      "answer_ok": false,
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "According to the Magna Carta, justice will never be sold, denied, or delayed.",
+      "error": null,
+      "latency_ms": 5782
+    },
+    {
+      "id": "search-013",
+      "category": "search_docs",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": false,
+      "answer_ok": false,
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "In the poem \"Invictus,\" the speaker states that he is the master of his fate.",
+      "error": null,
+      "latency_ms": 4164
+    },
+    {
+      "id": "search-014",
+      "category": "search_docs",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": false,
+      "answer_ok": true,
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "In Frost's poem, the speaker took the road \"less traveled by.\"",
+      "error": null,
+      "latency_ms": 4699
+    },
+    {
+      "id": "search-015",
+      "category": "search_docs",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": false,
+      "answer_ok": true,
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "In the excerpt, the White Rabbit took a watch out of its pocket.",
+      "error": null,
+      "latency_ms": 4911
+    },
+    {
+      "id": "calc-001",
+      "category": "calculator",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "calculator"
+      ],
+      "answer": "The answer is 144.",
+      "error": null,
+      "latency_ms": 3209
+    },
+    {
+      "id": "calc-002",
+      "category": "calculator",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "calculator"
+      ],
+      "answer": "The result of (3+4)*12 is 84.",
+      "error": null,
+      "latency_ms": 4735
+    },
+    {
+      "id": "calc-003",
+      "category": "calculator",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "calculator"
+      ],
+      "answer": "2 to the power of 10 is 1024.",
+      "error": null,
+      "latency_ms": 5609
+    },
+    {
+      "id": "calc-004",
+      "category": "calculator",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "calculator"
+      ],
+      "answer": "10 divided by 4 is 2.5.",
+      "error": null,
+      "latency_ms": 5195
+    },
+    {
+      "id": "calc-005",
+      "category": "calculator",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": false,
+      "answer_ok": true,
+      "used_tools": [
+        "calculator"
+      ],
+      "answer": "15 percent of 240 is 36.",
+      "error": null,
+      "latency_ms": 6803
+    },
+    {
+      "id": "calc-006",
+      "category": "calculator",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "calculator"
+      ],
+      "answer": "The result of 744 divided by 8 is 93.",
+      "error": null,
+      "latency_ms": 7041
+    },
+    {
+      "id": "calc-007",
+      "category": "calculator",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "calculator"
+      ],
+      "answer": "The result of 45 multiplied by 19 is 855.",
+      "error": null,
+      "latency_ms": 7548
+    },
+    {
+      "id": "calc-008",
+      "category": "calculator",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "calculator"
+      ],
+      "answer": "The sum of 3487 and 5129 is 8616.",
+      "error": null,
+      "latency_ms": 9635
+    },
+    {
+      "id": "calc-009",
+      "category": "calculator",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "calculator"
+      ],
+      "answer": "The result of 1024 minus 389 is 635.",
+      "error": null,
+      "latency_ms": 9025
+    },
+    {
+      "id": "calc-010",
+      "category": "calculator",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "calculator"
+      ],
+      "answer": "The remainder when 100 is divided by 7 is 2.",
+      "error": null,
+      "latency_ms": 7333
+    },
+    {
+      "id": "calc-011",
+      "category": "calculator",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "calculator"
+      ],
+      "answer": "The result of 9 squared plus 3 squared is 90.",
+      "error": null,
+      "latency_ms": 9589
+    },
+    {
+      "id": "calc-012",
+      "category": "calculator",
+      "tool_selection_ok": false,
+      "arguments_evaluated": true,
+      "arguments_ok": false,
+      "answer_ok": true,
+      "used_tools": [],
+      "answer": "2.5 hours is 150 minutes.",
+      "error": null,
+      "latency_ms": 2412
+    },
+    {
+      "id": "workday-001",
+      "category": "add_workdays",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "add_workdays"
+      ],
+      "answer": "The date 3 working days after 2026-10-05 is 2026-10-08, which falls on a Thursday.",
+      "error": null,
+      "latency_ms": 14255
+    },
+    {
+      "id": "workday-002",
+      "category": "add_workdays",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "add_workdays"
+      ],
+      "answer": "The date that is 1 working day after Friday, 2026-10-09, is Monday, 2026-10-12.",
+      "error": null,
+      "latency_ms": 13920
+    },
+    {
+      "id": "workday-003",
+      "category": "add_workdays",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "add_workdays"
+      ],
+      "answer": "The resulting date after adding 10 working days to 2026-10-05 is 2026-10-19, which falls on a Monday.",
+      "error": null,
+      "latency_ms": 14314
+    },
+    {
+      "id": "workday-004",
+      "category": "add_workdays",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "add_workdays"
+      ],
+      "answer": "The date 5 working days after 2026-10-14 is 2026-10-21, which falls on a Wednesday.",
+      "error": null,
+      "latency_ms": 12857
+    },
+    {
+      "id": "workday-005",
+      "category": "add_workdays",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "add_workdays"
+      ],
+      "answer": "The date remains 2026-10-10 since we are adding 0 working days to it.",
+      "error": null,
+      "latency_ms": 16497
+    },
+    {
+      "id": "workday-006",
+      "category": "add_workdays",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": false,
+      "answer_ok": false,
+      "used_tools": [
+        "add_workdays"
+      ],
+      "answer": "The date 1 working day before Monday 2026-10-12 is Thursday, 2026-10-08.",
+      "error": null,
+      "latency_ms": 13020
+    },
+    {
+      "id": "workday-007",
+      "category": "add_workdays",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "add_workdays"
+      ],
+      "answer": "The date after adding 20 working days to 2026-10-01 is 2026-10-29, which falls on a Thursday.",
+      "error": null,
+      "latency_ms": 14124
+    },
+    {
+      "id": "workday-008",
+      "category": "add_workdays",
+      "tool_selection_ok": false,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": false,
+      "used_tools": [
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays",
+        "add_workdays"
+      ],
+      "answer": "The date 2 working days after October 30, 2026, is November 3, 2026, which falls on a Tuesday.",
+      "error": null,
+      "latency_ms": 700368
+    },
+    {
+      "id": "workday-009",
+      "category": "add_workdays",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "add_workdays"
+      ],
+      "answer": "The resulting date after adding 7 working days to 2026-11-02 is 2026-11-11, which falls on a Wednesday.",
+      "error": null,
+      "latency_ms": 15455
+    },
+    {
+      "id": "workday-010",
+      "category": "add_workdays",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": false,
+      "used_tools": [
+        "add_workdays"
+      ],
+      "answer": "The date 3 working days before November 16, 2026, is November 11, 2026, which falls on a Wednesday.",
+      "error": null,
+      "latency_ms": 14916
+    },
+    {
+      "id": "workday-011",
+      "category": "add_workdays",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "add_workdays"
+      ],
+      "answer": "The resulting date after adding 1 working day to 2026-12-24 is 2026-12-25, which falls on a Friday.",
+      "error": null,
+      "latency_ms": 16567
+    },
+    {
+      "id": "workday-012",
+      "category": "add_workdays",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "add_workdays"
+      ],
+      "answer": "The date 12 working days after 2026-12-01 is 2026-12-17, which falls on a Thursday.",
+      "error": null,
+      "latency_ms": 14576
+    },
+    {
+      "id": "workday-013",
+      "category": "add_workdays",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "add_workdays"
+      ],
+      "answer": "Adding 30 working days to 2026-09-15 results in 2026-10-27, which is a Tuesday.",
+      "error": null,
+      "latency_ms": 14460
+    },
+    {
+      "id": "notool-001",
+      "category": "no_tool",
+      "tool_selection_ok": true,
+      "arguments_evaluated": false,
+      "arguments_ok": false,
+      "answer_ok": true,
+      "used_tools": [],
+      "answer": "Paris",
+      "error": null,
+      "latency_ms": 809
+    },
+    {
+      "id": "notool-002",
+      "category": "no_tool",
+      "tool_selection_ok": true,
+      "arguments_evaluated": false,
+      "arguments_ok": false,
+      "answer_ok": true,
+      "used_tools": [],
+      "answer": "The planet known as the Red Planet is Mars.",
+      "error": null,
+      "latency_ms": 2094
+    },
+    {
+      "id": "notool-003",
+      "category": "no_tool",
+      "tool_selection_ok": true,
+      "arguments_evaluated": false,
+      "arguments_ok": false,
+      "answer_ok": true,
+      "used_tools": [],
+      "answer": "The largest ocean on Earth is the Pacific Ocean.",
+      "error": null,
+      "latency_ms": 2272
+    },
+    {
+      "id": "notool-004",
+      "category": "no_tool",
+      "tool_selection_ok": true,
+      "arguments_evaluated": false,
+      "arguments_ok": false,
+      "answer_ok": true,
+      "used_tools": [],
+      "answer": "There are 7 continents on Earth: Asia, Africa, North America, South America, Antarctica, Europe, and Australia.",
+      "error": null,
+      "latency_ms": 4482
+    },
+    {
+      "id": "notool-005",
+      "category": "no_tool",
+      "tool_selection_ok": false,
+      "arguments_evaluated": false,
+      "arguments_ok": false,
+      "answer_ok": true,
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "The play \"Hamlet\" was written by William Shakespeare.",
+      "error": null,
+      "latency_ms": 7876
+    },
+    {
+      "id": "notool-006",
+      "category": "no_tool",
+      "tool_selection_ok": true,
+      "arguments_evaluated": false,
+      "arguments_ok": false,
+      "answer_ok": true,
+      "used_tools": [],
+      "answer": "The most widely spoken language in Brazil is Portuguese.",
+      "error": null,
+      "latency_ms": 2225
+    },
+    {
+      "id": "notool-007",
+      "category": "no_tool",
+      "tool_selection_ok": true,
+      "arguments_evaluated": false,
+      "arguments_ok": false,
+      "answer_ok": true,
+      "used_tools": [],
+      "answer": "The color you get when you mix blue and yellow paint is green.",
+      "error": null,
+      "latency_ms": 2841
+    },
+    {
+      "id": "notool-008",
+      "category": "no_tool",
+      "tool_selection_ok": true,
+      "arguments_evaluated": false,
+      "arguments_ok": false,
+      "answer_ok": true,
+      "used_tools": [],
+      "answer": "The French translation of 'thank you' is 'merci'.",
+      "error": null,
+      "latency_ms": 2521
+    },
+    {
+      "id": "notool-009",
+      "category": "no_tool",
+      "tool_selection_ok": true,
+      "arguments_evaluated": false,
+      "arguments_ok": false,
+      "answer_ok": true,
+      "used_tools": [],
+      "answer": "The chemical symbol for gold is Au.",
+      "error": null,
+      "latency_ms": 1753
+    },
+    {
+      "id": "notool-010",
+      "category": "no_tool",
+      "tool_selection_ok": true,
+      "arguments_evaluated": false,
+      "arguments_ok": false,
+      "answer_ok": true,
+      "used_tools": [],
+      "answer": "banana banana banana",
+      "error": null,
+      "latency_ms": 1114
+    }
+  ]
+}

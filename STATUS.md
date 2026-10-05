@@ -25,7 +25,9 @@
 3. `python -m evals.run_eval --backend recording --out evals/baseline.json`
    → 门禁基线重建为真实录制回放值：0.960 / 0.575 / 0.820。
 4. `python -m evals.run_eval --backend ollama --out evals/results.json`
-   → live 全量评测，含真实延迟。
+   → live 全量评测，含真实延迟。（首次运行受另一进程争抢影响，见下文
+   环境告警；服务器空闲后重跑至 `evals/results_live.json` 并提交，
+   README/STATUS 采用重跑数字。）
 
 ## 没完成什么 / 卡在哪里
 
@@ -33,10 +35,11 @@
 2. **GitHub Actions 未实跑**：未建远程仓库（规则禁止 push）。本地已模拟
    CI 门禁路径：recording 评估 + gate 退出码 0。
 3. **用例未人工审核**：50 条仍是 AI 起草 + 机器一致性校验，建议人工过一遍。
-4. **环境告警（不阻塞）**：评测期间同一台 Ollama 服务器上有另一个项目的
-   评测进程并发请求（DECISIONS.md D11）。影响：live pass 的延迟偏高且波动，
-   并产生两条环境失败（workday-001 900 秒超时、workday-005 HTTP 500），
-   已如实计入数字、未重跑未剔除。准确率指标不受排队时间影响。
+4. **环境告警（已解除，留档）**：第一次 live 评测期间同一台 Ollama 服务器
+   上有另一个项目的评测进程并发请求（DECISIONS.md D11），产生两条环境失败
+   和虚高延迟。该进程结束后，已确认服务器空闲并**重跑 live 评测**
+   （evals/results_live.json，零环境失败），README/STATUS 均已改用这次
+   干净运行的数字。第一次的数字未再引用。
 
 ## 测试
 
@@ -47,18 +50,29 @@
 
 ## 真实结果表
 
-### Live 全量评测（qwen2.5:7b，来源 evals/results.json，2026-10-05T17:28Z）
+### Live 全量评测（qwen2.5:7b，来源 evals/results_live.json，2026-10-05T18:29:47Z）
+
+启动前确认服务器空闲（`/api/ps` 无已加载模型、无其他连接），零错误、
+零环境失败。结果文件已提交进 git，作为 README 数字的可追溯来源。
 
 | 指标 | 值 |
 |---|---|
 | total_cases | 50 |
-| tool_selection_accuracy | 0.920 |
-| argument_accuracy | 0.525（分母 40） |
-| answer_accuracy | 0.740 |
-| latency P50 / P95 (ms) | 10 845 / 20 818 |
+| tool_selection_accuracy | 0.940 |
+| argument_accuracy | 0.550（分母 40） |
+| answer_accuracy | 0.820 |
+| latency P50 / P95 (ms) | 5 975 / 16 536 |
 
-注：含两条环境失败（workday-001 超时、workday-005 HTTP 500，见上文）；
-P95 去掉该离群值为 19 087 ms。
+P95 去掉 workday-008 离群值（该条单轮连调 97 次工具，耗时 700 秒）后
+为 16 080 ms，几乎不变。
+
+### 参数准确率按工具分解（同一次运行）
+
+| 工具 | 正确率 | 说明 |
+|---|---|---|
+| search_docs | 0/15 | 评分要求查询词与期望**逐字一致**（忽略大小写和空白后仍需同词同序）；模型每次都改写查询词，故全部判不中。是评分口径的严格性：15 条中 9 条最终答案仍正确 |
+| calculator | 10/12 | calc-005 词序不同（`240 * 0.15` vs `0.15*240`）；calc-012 没调工具直接答对 |
+| add_workdays | 12/13 | workday-006 发 `days: -2`（期望 -1），真实的理解错误 |
 
 ### 门禁基线（真实录制回放，来源 evals/baseline.json）
 
@@ -72,12 +86,15 @@ P95 去掉该离群值为 19 087 ms。
 门禁在 CI 里回放同一批录制，是确定性的：只有管线代码被改坏才会掉到
 基线之下。
 
-### 失败模式（详见 README 的失败模式分析表）
+### 失败模式（来源 evals/results_live.json，详见 README 的失败模式分析表）
 
-- search 参数 15/15 不中：模型改写查询词（严格匹配故意暴露此差异）。
-- workday-006：模型发 `days: -2`（期望 -1）→ 真实的模型理解错误。
-- notool-005：两次运行都不该调工具却调了 search_docs，但答案仍对。
-- notool-006：答案拼出 "portunese" —— 7B 量化模型的真实短板。
+- search 参数 0/15：查询词需与期望逐字一致，模型每次都改写（评分口径严格）；
+  但 search 的最终答案 9/15 正确。
+- workday-008：单轮连调 97 次 add_workdays，答案仍对，耗时 700 秒。
+- calc-012：没调 calculator 直接心算答对（答案对、策略错）。
+- workday-006：两次 live 运行都发 `days: -2`（期望 -1）→ 稳定的模型理解错误。
+- notool-005：三次运行（录制 + 两次 live）都不该调工具却调了 search_docs，
+  但答案仍对。
 
 ### Pipeline 自检（历史 fixture 数据，含义见 README 专门小节）
 

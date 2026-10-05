@@ -67,40 +67,36 @@ evals/run_eval.py ──► results JSON（三个准确率 + P50/P95 延迟）
 环境：Ollama 0.35.1，qwen2.5:7b（7.6B，Q4_K_M），macOS 笔记本，
 2026-10-05。每一个数字都来自实际执行的脚本输出，出处标注在"来源"列。
 
-### 真实模型评估（来源：`evals/results.json`，由
-`python -m evals.run_eval --backend ollama` 于 2026-10-05T17:28Z 生成）
+### 真实模型评估（来源：`evals/results_live.json`，由
+`python -m evals.run_eval --backend ollama` 于 2026-10-05T18:29:47Z 生成；
+启动前已确认 Ollama 服务器空闲：`/api/ps` 无已加载模型、无其他连接）
 
 | 指标 | 值 | 含义 |
 |---|---|---|
-| total_cases | 50 | 全部跑完 |
-| tool_selection_accuracy | 0.920 | 46/50 调对了工具集合 |
-| argument_accuracy | 0.525 | 21/40（分母只算有期望参数的 40 条） |
-| answer_accuracy | 0.740 | 37/50 最终答案过判定规则 |
-| latency P50 / P95 | 10 845 / 20 818 ms | 单条用例整循环耗时 |
+| total_cases | 50 | 全部跑完，**零错误、零环境失败** |
+| tool_selection_accuracy | 0.940 | 47/50 调对了工具集合 |
+| argument_accuracy | 0.550 | 22/40（分母只算有期望参数的 40 条） |
+| answer_accuracy | 0.820 | 41/50 最终答案过判定规则 |
+| latency P50 / P95 | 5 975 / 16 536 ms | 单条用例整循环耗时 |
 
-**必须知道的三个注脚**：
+### 参数准确率按工具分解（来源：`evals/results_live.json` 逐条记录）
 
-1. **两条基础设施失败**：workday-001（一轮推理超过 900 秒超时）、
-   workday-005（Ollama 返回 HTTP 500）。跑评测时同一台 Ollama 服务器上
-   还有另一个本地项目的评测进程在并发请求（见 DECISIONS.md D11），这两条
-   是环境失败而非模型失败——同两条在录制 pass 中均正常完成。按"不重跑、
-   不挑数字"的原则如实计入。
-2. **运行间方差**：另一条独立 pass（录制回放，见下）测得
-   0.960 / 0.575 / 0.820。两次运行差 2–8 个百分点，是 7B 模型的真实
-   随机性；单次评估的绝对值别太当真，看趋势要看多次。
-3. **P95 对离群值稳健**：去掉 900 秒那条后 P95 为 19 087 ms，
-   差异很小（线性插值分位数的性质）。
+| 工具 | 参数正确率 | 失败用例 |
+|---|---|---|
+| search_docs | **0/15 = 0.000** | 15 条全部：评分要求查询词与期望**逐字一致**（忽略大小写和空白后仍需同词同序），模型每次都会改写查询词（如期望 `four score and seven`、实际 `Gettysburg Address first words`），故全部判不中——这是评分口径的严格性，不是"模型不会搜"：15 条里 9 条最终答案仍正确 |
+| calculator | **10/12 = 0.833** | calc-005（`240 * 0.15` vs 期望 `0.15*240`，词序不同）；calc-012（没调用工具，直接心算答对） |
+| add_workdays | **12/13 = 0.923** | workday-006（`days: -2` vs 期望 `-1`，真实的理解错误，答案也跟着错） |
 
-### 失败模式分析（来源：`evals/results.json` 与 `evals/recordings/` 的逐条记录）
+### 失败模式分析（来源：`evals/results_live.json`；标注"录制 pass"的出自 `evals/recordings/`）
 
 | 模式 | 证据 | 解读 |
 |---|---|---|
-| search 参数 15/15 全不中 | 模型改写查询词，如期望 `four score and seven`、实际 `Gettysburg Address first words` | 期望参数是"我理想中的查询"，模型有自己合理的写法；严格匹配故意暴露这个差异 |
-| search 答案 8 条不中 | 查询词弱时检索返回标题行（如 search-001 返回 "The Gettysburg Address" 而非正文） | 词面匹配检索的上限；升级路径是 BM25/向量检索 |
-| workday 真实算错 | workday-006 发了 `days: -2`（期望 -1），答案因此错成 10-08 | 7B 模型对"1 个工作日之前"的真实理解错误，正是这类评测要抓的 |
-| 不该调工具时调了 | notool-005（"谁写了 Hamlet"）两次运行都去调 search_docs，但最终答案仍正确（Shakespeare 不在语料里，模型自己知道） | 工具选择和答案正确性是两个独立维度，一个可以对另一个错 |
-| 答案拼错词 | notool-006 答出 "portunese"（Portuguese） | 7B 量化模型的真实短板，没有任何后台逻辑能救 |
-| 重复调用工具 | calc-004 同一轮连调两次 calculator | 工具选择指标是**严格列表相等**，重复调用算失败——故意的，见 DECISIONS.md D12 |
+| search 答案 6 条不中 | 查询词弱时检索返回标题行（如 search-001 返回 "The Gettysburg Address" 而非含 "Four score and seven" 的正文行） | 词面匹配检索的上限；升级路径是 BM25/向量检索 |
+| workday-008 单轮连调 97 次 add_workdays | 一边调一边自我纠正，最终答案正确（Nov 3），但耗时 700 秒，是 P50 的 117 倍 | 7B 模型陷入"调工具→不满意→再调"的循环；严格列表相等下工具选择判失败；P95 对该离群值稳健（去掉后 16 080 ms vs 16 536 ms） |
+| calc-012 该调不调 | "2.5 小时是多少分钟"直接心算答 150，没走 calculator | 答案对但违反了 system prompt 的"算术必须用工具"策略——正是门禁要暴露的策略漂移 |
+| 不该调工具时调了 | notool-005（"谁写了 Hamlet"）三次运行（录制 pass + 两次 live）都去调 search_docs，最终答案仍正确 | 工具选择和答案正确性是两个独立维度，一个错另一个可以对 |
+| workday 真实算错 | workday-006 两次 live 运行都发 `days: -2`（期望 -1），答案错成 10-08 | 7B 模型对"1 个工作日之前"的稳定理解错误，正是这类评测要抓的 |
+| 重复调用工具 | calc-004 同一轮连调两次 calculator（录制 pass） | 工具选择指标是**严格列表相等**，重复调用算失败——故意的，见 DECISIONS.md D12 |
 
 ### 门禁基线（来源：`evals/baseline.json`，由
 `python -m evals.run_eval --backend recording` 在真实录制上生成）
@@ -114,6 +110,8 @@ evals/run_eval.py ──► results JSON（三个准确率 + P50/P95 延迟）
 基线 = 回放 `evals/recordings/`（qwen2.5:7b 的真实响应，模型侧逐字重放、
 工具真实执行），所以是确定性的：CI 上重放同一批录制，指标恒等于基线，
 除非管线代码（工具/打分/循环）被改坏——这就是门禁抓的回归。
+与上面 live 运行的差（工具 0.960↔0.940、参数 0.575↔0.550、答案
+0.820↔0.820）就是同一模型两次独立运行的方差。
 换模型或改 prompt 后：`evals/record.py` 重录 → 重建 baseline → 门禁
 升级为新一轮的模型回归门禁。
 
@@ -164,6 +162,11 @@ CI 门禁的第一个版本，当时的评估结果是三个准确率全部 1.00
 子集匹配、数值/字符串归一化且**忽略格式空白**——`744 / 8` 等于
 `744/8`，但词序和选词不同照样失败）、`answer_rule`（`contains` 或
 `regex`，大小写不敏感）。
+
+注意这个口径的一个直接后果：search_docs 的期望查询要求与模型实际查询
+**逐字一致**（同词同序），而模型每次都会改写查询词，所以参数准确率
+0/15（见上文按工具分解表）。这是评分口径的严格性；如果想度量"检索是否
+命中"，看的是 answer_accuracy 里 search 那部分（9/15 的最终答案正确）。
 
 **用例来源说明**：50 条用例由 AI（Claude Code）起草，由项目所有者负责
 审核；截至 2026-10-05 尚未人工复核，`tests/test_eval_dataset.py` 里的
