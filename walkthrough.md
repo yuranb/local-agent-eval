@@ -78,9 +78,14 @@ Frost 诗意路、爱丽丝开头）。每篇 1–4 段，是检索工具的测�
 
 ## 第 6 站：打分 `evals/scoring.py`（纯函数，无模型）
 
-- `tool_selection_ok`（第 32 行）：调用的工具集合 == 期望集合（排序后比较）。
+- `tool_selection_ok`（第 32 行）：调用的工具按**严格列表相等**比较
+  （排序后比对，含次数）——模型对同一工具重复调用算失败（真实案例
+  calc-004，见 DECISIONS.md D12）。
 - `arguments_ok`（第 37 行）：期望参数是某次实际调用的**子集**即可；
-  第 15 行 `_canonical` 做归一化——数字 "3" 和 3 相等、大小写和空白不敏感。
+  第 15 行 `_canonical` 做归一化——数字 "3" 和 3 相等、大小写不敏感、
+  **格式空白被忽略**（`744 / 8` == `744/8`，qwen2.5:7b 真实跑出来 7/12
+  的 calculator 用例只有空格差异，不修会把 0.575 错报成 0.425），
+  但词的选择和顺序仍然敏感，所以改写查询词照样失败。
 - `answer_ok`（第 56 行）：contains（归一化子串）或 regex。
 - `percentile`（第 66 行）：线性插值法（numpy 默认约定），第 74 行算秩。
 - `score_case` / `compute_metrics`（第 81/106 行）：聚合出三个准确率；
@@ -98,17 +103,21 @@ Frost 诗意路、爱丽丝开头）。每篇 1–4 段，是检索工具的测�
 
 - `evals/recording.py`：`RecordingBackend`（第 24 行）按轮次吐出录制的
   助手消息，吐完再要就报错（第 33 行的 chat）。
-- `evals/make_recordings.py`：从 cases.jsonl 生成 fixture（理想轨迹）。
-  `fixture_answer`（第 36 行）的答案文本来自**真实工具输出**，并自检必须
-  满足该用例的 answer_rule 才允许写出（`build_turns`，第 71 行）。
-  这些文件 `source: fixture`，含义见 DECISIONS.md D3。
+- `evals/recordings/`：**现在是 qwen2.5:7b 的真实录制**（2026-10-05，
+  50/50 条，模型侧逐字回放、工具真实执行）。
+- `evals/make_recordings.py`：从 cases.jsonl 生成 fixture（理想轨迹），
+  现在只用于管线自检和教学对比，不再是门禁数据。`fixture_answer`
+  （第 36 行）的答案文本来自**真实工具输出**，并自检必须满足该用例的
+  answer_rule 才允许写出（`build_turns`，第 71 行）。
 - `evals/record.py`：在装了 Ollama 的机器上跑同一条循环、把每轮真实模型
-  回复录下来，替换 fixture 后门禁就升级成真实模型门禁。**本机未执行过。**
+  回复录下来。**已于 2026-10-05 真实执行过**（50/50 条成功）——换模型或
+  改 prompt 后重跑它 + 重建 baseline，门禁就升级为新一轮模型门禁。
 - `evals/gate.py`：`compare`（第 24 行）只比较三个准确率，第 35 行是
   判定 + 容差（1e-9，防浮点噪声）。低于基线退出码 1，输入坏了退出码 2，
   通过 0。不比较延迟（DECISIONS.md D4）。
-- `evals/baseline.json`：上面这条 recording 流水线的真实输出，进 git，
-  是门禁的比较基准。
+- `evals/baseline.json`：真实录制回放的真实输出（0.960/0.575/0.820），
+  进 git，是门禁的比较基准。注意它和 live 运行（0.920/0.525/0.740）
+  的差就是模型运行间方差。
 
 ## 第 9 站：CI 与容器
 
@@ -120,15 +129,15 @@ Frost 诗意路、爱丽丝开头）。每篇 1–4 段，是检索工具的测�
   容器里没有 Ollama，`OLLAMA_HOST` 默认指向 host.docker.internal。
   **未验证**（本机无 Docker）。
 
-## 测试地图（106 个）
+## 测试地图（109 个）
 
 | 文件 | 数量 | 测什么 |
 |---|---|---|
 | tests/test_tools.py | 37 | 三个工具，含安全注入、除零、跨周末 |
-| tests/test_scoring.py | 19 | 打分纯函数、百分位、分母正确性 |
+| tests/test_scoring.py | 21 | 打分纯函数、百分位、分母正确性、空白归一化 |
 | tests/test_eval_pipeline.py | 16 | fixture 生成、回放、端到端评估、门禁退出码 |
 | tests/test_eval_dataset.py | 10 | 数据集结构与"用例↔工具输出"一致性 |
-| tests/test_llm.py | 9 | 消息归一化、连接错误翻译 |
+| tests/test_llm.py | 10 | 消息归一化、连接/超时错误翻译 |
 | tests/test_loop.py | 8 | 循环：直接答、工具回传、失败恢复、步数上限 |
 | tests/test_app.py | 7 | API：trace 结构、校验、错误字段 |
 
@@ -159,9 +168,11 @@ test_calculator_rejects_non_arithmetic_input 列了 7 种注入尝试。
 **Q4. "CI 上没有 Ollama，评估门禁怎么跑？"**
 后端可插拔：循环只依赖 `chat()` 接口（`agent/loop.py:28`），CI 用
 `RecordingBackend` 回放录制（`evals/recording.py:24`），工具照常真实执行。
-当前录制是 fixture（理想轨迹），所以基线 1.000 验证的是管线而非模型——
-这个区别我在 README 里写明了，升级路径是 `evals/record.py` 在有 Ollama
-的机器重录。设计理由在 DECISIONS.md D3。
+录制现在是 qwen2.5:7b 的真实响应（2026-10-05 用 `evals/record.py` 录的，
+50/50 条成功），所以基线（0.960/0.575/0.820）是真实模型成绩；CI 重放
+同一批录制是确定性的，只有管线被改坏才会掉破基线。历史上先用 fixture
+跑通过整个流程（当时 1.000 只证明管线自洽），这个演进过程本身是很好的
+面试素材。设计理由在 DECISIONS.md D3/D10。
 
 **Q5. "为什么门禁不比较延迟？"**
 `evals/gate.py:24` 的 compare 只挑三个准确率指标。延迟依赖跑评测的机器
@@ -200,11 +211,11 @@ AI 起草 + 机器一致性测试兜底 + 人工审核（README 里如实写了"
 - `agent/config.py`：模型名 / host / max_steps，环境变量可覆盖
 - `server/app.py`：FastAPI /chat，惰性后端 + 注入
 - `evals/cases.jsonl`：50 条用例（四类）
-- `evals/scoring.py`：纯打分（集合匹配/参数子集/答案规则/百分位）
+- `evals/scoring.py`：纯打分（严格列表匹配/参数子集/答案规则/百分位）
 - `evals/run_eval.py`：评估入口，recording 和 ollama 双后端
 - `evals/recording.py` / `make_recordings.py` / `record.py`：
-  回放 / 生成 fixture / 真实录制（未执行）
+  回放 / 生成 fixture（自检用）/ 真实录制（已执行，50/50 条）
 - `evals/gate.py` + `baseline.json`：门禁 + 基线
 - `.github/workflows/ci.yml`：pytest + 门禁两个 job（未实跑）
 - `Dockerfile`：API 容器（未验证）
-- `tests/`：106 个测试，全部通过
+- `tests/`：109 个测试，全部通过
