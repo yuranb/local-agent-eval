@@ -65,5 +65,11 @@ class OllamaBackend:
                 f"cannot reach Ollama at {self.host} — is it installed and "
                 "running? (This machine had no Ollama; see STATUS.md.)"
             ) from exc
+        except httpx.TimeoutException as exc:
+            raise RuntimeError(
+                f"Ollama at {self.host} did not answer within {self.timeout}s — "
+                "the server may be busy with other requests (raise OLLAMA_TIMEOUT "
+                "or wait for the other load to finish)."
+            ) from exc
         response.raise_for_status()
         return normalize_message(response.json()["message"])

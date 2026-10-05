@@ -71,3 +71,16 @@ def test_ollama_backend_translates_connect_error(monkeypatch):
     monkeypatch.setattr(httpx_module, "post", raise_connect_error)
     with pytest.raises(RuntimeError, match="Ollama"):
         backend.chat([{"role": "user", "content": "hi"}])
+
+
+def test_ollama_backend_translates_timeout(monkeypatch):
+    import httpx as httpx_module
+    from agent.llm import OllamaBackend as Backend
+
+    def raise_timeout(*args, **kwargs):
+        raise httpx_module.ReadTimeout("slow")
+
+    monkeypatch.setattr(httpx_module, "post", raise_timeout)
+    backend = Backend(host="http://localhost:11434")
+    with pytest.raises(RuntimeError, match="did not answer within"):
+        backend.chat([{"role": "user", "content": "hi"}])
