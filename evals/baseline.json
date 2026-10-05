@@ -2,12 +2,12 @@
   "schema_version": 1,
   "backend": "recording",
   "model": null,
-  "timestamp": "2026-10-05T08:10:05.388820+00:00",
+  "timestamp": "2026-10-05T16:59:20.635713+00:00",
   "metrics": {
     "total_cases": 50,
-    "tool_selection_accuracy": 1.0,
-    "argument_accuracy": 1.0,
-    "answer_accuracy": 1.0,
+    "tool_selection_accuracy": 0.96,
+    "argument_accuracy": 0.575,
+    "answer_accuracy": 0.82,
     "latency_ms_p50": 0.0,
     "latency_ms_p95": 0.0
   },
@@ -17,26 +17,26 @@
       "category": "search_docs",
       "tool_selection_ok": true,
       "arguments_evaluated": true,
-      "arguments_ok": true,
-      "answer_ok": true,
+      "arguments_ok": false,
+      "answer_ok": false,
       "used_tools": [
         "search_docs"
       ],
-      "answer": "According to the docs: \"Four score and seven years ago our fathers brought forth on this continent,\"",
+      "answer": "The first words of the Gettysburg Address in the local docs are \"The Gettysburg Address\".",
       "error": null,
-      "latency_ms": 3
+      "latency_ms": 0
     },
     {
       "id": "search-002",
       "category": "search_docs",
       "tool_selection_ok": true,
       "arguments_evaluated": true,
-      "arguments_ok": true,
+      "arguments_ok": false,
       "answer_ok": true,
       "used_tools": [
         "search_docs"
       ],
-      "answer": "According to the docs: \"Abraham Lincoln, November 19, 1863\"",
+      "answer": "The Gettysburg Address was delivered on November 19, 1863.",
       "error": null,
       "latency_ms": 0
     },
@@ -45,12 +45,12 @@
       "category": "search_docs",
       "tool_selection_ok": true,
       "arguments_evaluated": true,
-      "arguments_ok": true,
-      "answer_ok": true,
+      "arguments_ok": false,
+      "answer_ok": false,
       "used_tools": [
         "search_docs"
       ],
-      "answer": "According to the docs: \"these are Life, Liberty and the pursuit of Happiness.\"",
+      "answer": "The unalienable Rights listed in the Declaration of Independence excerpt are \"Life, Liberty, and the pursuit of Happiness.\"",
       "error": null,
       "latency_ms": 0
     },
@@ -59,12 +59,12 @@
       "category": "search_docs",
       "tool_selection_ok": true,
       "arguments_evaluated": true,
-      "arguments_ok": true,
+      "arguments_ok": false,
       "answer_ok": true,
       "used_tools": [
         "search_docs"
       ],
-      "answer": "According to the docs: \"In Congress, July 4, 1776\"",
+      "answer": "The date in the header of the Declaration of Independence excerpt is not directly provided in the snippets, but it is often noted as July 4, 1776.",
       "error": null,
       "latency_ms": 0
     },
@@ -73,12 +73,12 @@
       "category": "search_docs",
       "tool_selection_ok": true,
       "arguments_evaluated": true,
-      "arguments_ok": true,
-      "answer_ok": true,
+      "arguments_ok": false,
+      "answer_ok": false,
       "used_tools": [
         "search_docs"
       ],
-      "answer": "According to the docs: \"Shall I compare thee to a summer's day?\"",
+      "answer": "The first line of Shakespeare's Sonnet 18 is \"Sonnet 18\".",
       "error": null,
       "latency_ms": 0
     },
@@ -87,12 +87,12 @@
       "category": "search_docs",
       "tool_selection_ok": true,
       "arguments_evaluated": true,
-      "arguments_ok": true,
+      "arguments_ok": false,
       "answer_ok": true,
       "used_tools": [
         "search_docs"
       ],
-      "answer": "According to the docs: \"But thy eternal summer shall not fade\"",
+      "answer": "According to Sonnet 18, thy eternal summer shall not fade.",
       "error": null,
       "latency_ms": 0
     },
@@ -101,12 +101,12 @@
       "category": "search_docs",
       "tool_selection_ok": true,
       "arguments_evaluated": true,
-      "arguments_ok": true,
+      "arguments_ok": false,
       "answer_ok": true,
       "used_tools": [
         "search_docs"
       ],
-      "answer": "According to the docs: \"The Hare was much amused at the idea of running a race with the Tortoise, but\"",
+      "answer": "In the tortoise and hare fable, the Tortoise wins the race.",
       "error": null,
       "latency_ms": 0
     },
@@ -115,12 +115,12 @@
       "category": "search_docs",
       "tool_selection_ok": true,
       "arguments_evaluated": true,
-      "arguments_ok": true,
+      "arguments_ok": false,
       "answer_ok": true,
       "used_tools": [
         "search_docs"
       ],
-      "answer": "According to the docs: \"saying: \"I am sure they are sour.\"\"",
+      "answer": "In the fox and grapes fable, when the fox cannot reach the grapes and has to give up, he claims that the grapes are sour and not worth eating.",
       "error": null,
       "latency_ms": 0
     },
@@ -129,12 +129,12 @@
       "category": "search_docs",
       "tool_selection_ok": true,
       "arguments_evaluated": true,
-      "arguments_ok": true,
+      "arguments_ok": false,
       "answer_ok": true,
       "used_tools": [
         "search_docs"
       ],
-      "answer": "According to the docs: \"1. Sun Tzu said: The art of war is of vital importance to the State.\"",
+      "answer": "According to the excerpt from \"The Art of War,\" Sun Tzu stated that \"The art of war is of vital importance to the State.\"",
       "error": null,
       "latency_ms": 0
     },
@@ -143,12 +143,12 @@
       "category": "search_docs",
       "tool_selection_ok": true,
       "arguments_evaluated": true,
-      "arguments_ok": true,
-      "answer_ok": true,
+      "arguments_ok": false,
+      "answer_ok": false,
       "used_tools": [
         "search_docs"
       ],
-      "answer": "According to the docs: \"(4) The Commander; (5) Method and discipline.\"",
+      "answer": "The fifth of the five constant factors of war, according to the excerpt, is not explicitly stated. The factors begin with the art of war itself, followed by the way (the political situation),天、地、将、法（the elements of heaven, earth, general, and method）, and the laws of war. The exact phrasing for the fifth factor isn't provided in the snippet.",
       "error": null,
       "latency_ms": 0
     },
@@ -157,12 +157,12 @@
       "category": "search_docs",
       "tool_selection_ok": true,
       "arguments_evaluated": true,
-      "arguments_ok": true,
+      "arguments_ok": false,
       "answer_ok": true,
       "used_tools": [
         "search_docs"
       ],
-      "answer": "According to the docs: \"There is grandeur in this view of life, with its several powers, having been\"",
+      "answer": "According to the documents, Darwin uses the phrase \"There is grandeur in this view of life\" to describe his view of life.",
       "error": null,
       "latency_ms": 0
     },
@@ -171,12 +171,12 @@
       "category": "search_docs",
       "tool_selection_ok": true,
       "arguments_evaluated": true,
-      "arguments_ok": true,
-      "answer_ok": true,
+      "arguments_ok": false,
+      "answer_ok": false,
       "used_tools": [
         "search_docs"
       ],
-      "answer": "According to the docs: \"To no one will we sell, to no one deny or delay right or justice.\"",
+      "answer": "According to Magna Carta (excerpt, 1215), \"right or remedy hereafter sold, delayed or denied\".",
       "error": null,
       "latency_ms": 0
     },
@@ -185,12 +185,12 @@
       "category": "search_docs",
       "tool_selection_ok": true,
       "arguments_evaluated": true,
-      "arguments_ok": true,
-      "answer_ok": true,
+      "arguments_ok": false,
+      "answer_ok": false,
       "used_tools": [
         "search_docs"
       ],
-      "answer": "According to the docs: \"I am the master of my fate,\"",
+      "answer": "In the poem \"Invictus,\" the speaker states that he is the master of his fate.",
       "error": null,
       "latency_ms": 0
     },
@@ -199,12 +199,12 @@
       "category": "search_docs",
       "tool_selection_ok": true,
       "arguments_evaluated": true,
-      "arguments_ok": true,
+      "arguments_ok": false,
       "answer_ok": true,
       "used_tools": [
         "search_docs"
       ],
-      "answer": "According to the docs: \"I took the one less traveled by,\"",
+      "answer": "In Frost's poem, the speaker took the road \"less traveled by.\"",
       "error": null,
       "latency_ms": 0
     },
@@ -213,12 +213,12 @@
       "category": "search_docs",
       "tool_selection_ok": true,
       "arguments_evaluated": true,
-      "arguments_ok": true,
+      "arguments_ok": false,
       "answer_ok": true,
       "used_tools": [
         "search_docs"
       ],
-      "answer": "According to the docs: \"with either a waistcoat-pocket, or a watch to take out of it.\"",
+      "answer": "In the excerpt, the White Rabbit took a watch out of its pocket.",
       "error": null,
       "latency_ms": 0
     },
@@ -232,7 +232,7 @@
       "used_tools": [
         "calculator"
       ],
-      "answer": "The result of 12*12 is 144.",
+      "answer": "12 times 12 is 144.",
       "error": null,
       "latency_ms": 0
     },
@@ -260,21 +260,22 @@
       "used_tools": [
         "calculator"
       ],
-      "answer": "The result of 2**10 is 1024.",
+      "answer": "2 to the power of 10 is 1024.",
       "error": null,
       "latency_ms": 0
     },
     {
       "id": "calc-004",
       "category": "calculator",
-      "tool_selection_ok": true,
+      "tool_selection_ok": false,
       "arguments_evaluated": true,
       "arguments_ok": true,
       "answer_ok": true,
       "used_tools": [
+        "calculator",
         "calculator"
       ],
-      "answer": "The result of 10/4 is 2.5.",
+      "answer": "10 divided by 4 is 2.5.",
       "error": null,
       "latency_ms": 0
     },
@@ -283,12 +284,12 @@
       "category": "calculator",
       "tool_selection_ok": true,
       "arguments_evaluated": true,
-      "arguments_ok": true,
+      "arguments_ok": false,
       "answer_ok": true,
       "used_tools": [
         "calculator"
       ],
-      "answer": "The result of 0.15*240 is 36.",
+      "answer": "15 percent of 240 is 36.",
       "error": null,
       "latency_ms": 0
     },
@@ -302,7 +303,7 @@
       "used_tools": [
         "calculator"
       ],
-      "answer": "The result of 744/8 is 93.",
+      "answer": "The result of 744 divided by 8 is 93.",
       "error": null,
       "latency_ms": 0
     },
@@ -316,7 +317,7 @@
       "used_tools": [
         "calculator"
       ],
-      "answer": "The result of 45*19 is 855.",
+      "answer": "The result of 45 multiplied by 19 is 855.",
       "error": null,
       "latency_ms": 0
     },
@@ -330,7 +331,7 @@
       "used_tools": [
         "calculator"
       ],
-      "answer": "The result of 3487+5129 is 8616.",
+      "answer": "The sum of 3487 and 5129 is 8616.",
       "error": null,
       "latency_ms": 0
     },
@@ -344,7 +345,7 @@
       "used_tools": [
         "calculator"
       ],
-      "answer": "The result of 1024-389 is 635.",
+      "answer": "The result of 1024 minus 389 is 635.",
       "error": null,
       "latency_ms": 0
     },
@@ -358,7 +359,7 @@
       "used_tools": [
         "calculator"
       ],
-      "answer": "The result of 100%7 is 2.",
+      "answer": "The remainder when 100 is divided by 7 is 2.",
       "error": null,
       "latency_ms": 0
     },
@@ -372,7 +373,7 @@
       "used_tools": [
         "calculator"
       ],
-      "answer": "The result of 9**2+3**2 is 90.",
+      "answer": "The value of 9 squared plus 3 squared is 90.",
       "error": null,
       "latency_ms": 0
     },
@@ -386,7 +387,7 @@
       "used_tools": [
         "calculator"
       ],
-      "answer": "The result of 2.5*60 is 150.",
+      "answer": "The meeting lasts 150 minutes.",
       "error": null,
       "latency_ms": 0
     },
@@ -400,7 +401,7 @@
       "used_tools": [
         "add_workdays"
       ],
-      "answer": "The resulting date is 2026-10-08 (Thursday).",
+      "answer": "The date 3 working days after 2026-10-05 is 2026-10-08, which is a Thursday.",
       "error": null,
       "latency_ms": 1
     },
@@ -414,7 +415,7 @@
       "used_tools": [
         "add_workdays"
       ],
-      "answer": "The resulting date is 2026-10-12 (Monday).",
+      "answer": "The date 1 working day after Friday 2026-10-09 is Monday, 2026-10-12.",
       "error": null,
       "latency_ms": 0
     },
@@ -428,7 +429,7 @@
       "used_tools": [
         "add_workdays"
       ],
-      "answer": "The resulting date is 2026-10-19 (Monday).",
+      "answer": "The resulting date after adding 10 working days to 2026-10-05 is 2026-10-19, which falls on a Monday.",
       "error": null,
       "latency_ms": 0
     },
@@ -442,7 +443,7 @@
       "used_tools": [
         "add_workdays"
       ],
-      "answer": "The resulting date is 2026-10-21 (Wednesday).",
+      "answer": "The date 5 working days after 2026-10-14 is 2026-10-21, which falls on a Wednesday.",
       "error": null,
       "latency_ms": 0
     },
@@ -456,7 +457,7 @@
       "used_tools": [
         "add_workdays"
       ],
-      "answer": "The resulting date is 2026-10-10 (Saturday).",
+      "answer": "The date remains 2026-10-10 since we are adding 0 working days, and the 10th is a Saturday.",
       "error": null,
       "latency_ms": 0
     },
@@ -465,12 +466,12 @@
       "category": "add_workdays",
       "tool_selection_ok": true,
       "arguments_evaluated": true,
-      "arguments_ok": true,
-      "answer_ok": true,
+      "arguments_ok": false,
+      "answer_ok": false,
       "used_tools": [
         "add_workdays"
       ],
-      "answer": "The resulting date is 2026-10-09 (Friday).",
+      "answer": "The date 1 working day before Monday, 2026-10-12, is Thursday, 2026-10-08.",
       "error": null,
       "latency_ms": 0
     },
@@ -484,7 +485,7 @@
       "used_tools": [
         "add_workdays"
       ],
-      "answer": "The resulting date is 2026-10-29 (Thursday).",
+      "answer": "The resulting date after adding 20 working days to 2026-10-01 is 2026-10-29, which falls on a Thursday.",
       "error": null,
       "latency_ms": 0
     },
@@ -498,7 +499,7 @@
       "used_tools": [
         "add_workdays"
       ],
-      "answer": "The resulting date is 2026-11-03 (Tuesday).",
+      "answer": "The date 2 working days after 2026-10-30 is 2026-11-03, which falls on a Tuesday.",
       "error": null,
       "latency_ms": 0
     },
@@ -512,7 +513,7 @@
       "used_tools": [
         "add_workdays"
       ],
-      "answer": "The resulting date is 2026-11-11 (Wednesday).",
+      "answer": "The resulting date after adding 7 working days to 2026-11-02 is 2026-11-11, which falls on a Wednesday.",
       "error": null,
       "latency_ms": 0
     },
@@ -522,11 +523,11 @@
       "tool_selection_ok": true,
       "arguments_evaluated": true,
       "arguments_ok": true,
-      "answer_ok": true,
+      "answer_ok": false,
       "used_tools": [
         "add_workdays"
       ],
-      "answer": "The resulting date is 2026-11-11 (Wednesday).",
+      "answer": "The date 3 working days before November 16, 2026, is November 11, 2026, which is a Wednesday.",
       "error": null,
       "latency_ms": 0
     },
@@ -540,7 +541,7 @@
       "used_tools": [
         "add_workdays"
       ],
-      "answer": "The resulting date is 2026-12-25 (Friday).",
+      "answer": "The resulting date after adding 1 working day to 2026-12-24 is 2026-12-25, which falls on a Friday.",
       "error": null,
       "latency_ms": 0
     },
@@ -554,7 +555,7 @@
       "used_tools": [
         "add_workdays"
       ],
-      "answer": "The resulting date is 2026-12-17 (Thursday).",
+      "answer": "The date 12 working days after 2026-12-01 is 2026-12-17, which falls on a Thursday.",
       "error": null,
       "latency_ms": 0
     },
@@ -568,7 +569,7 @@
       "used_tools": [
         "add_workdays"
       ],
-      "answer": "The resulting date is 2026-10-27 (Tuesday).",
+      "answer": "The resulting date after adding 30 working days to 2026-09-15 is 2026-10-27, which falls on a Tuesday.",
       "error": null,
       "latency_ms": 0
     },
@@ -580,7 +581,7 @@
       "arguments_ok": false,
       "answer_ok": true,
       "used_tools": [],
-      "answer": "The answer is Paris.",
+      "answer": "Paris",
       "error": null,
       "latency_ms": 0
     },
@@ -592,7 +593,7 @@
       "arguments_ok": false,
       "answer_ok": true,
       "used_tools": [],
-      "answer": "The answer is Mars.",
+      "answer": "The planet known as the Red Planet is Mars.",
       "error": null,
       "latency_ms": 0
     },
@@ -604,7 +605,7 @@
       "arguments_ok": false,
       "answer_ok": true,
       "used_tools": [],
-      "answer": "The answer is Pacific.",
+      "answer": "The largest ocean on Earth is the Pacific Ocean.",
       "error": null,
       "latency_ms": 0
     },
@@ -616,19 +617,21 @@
       "arguments_ok": false,
       "answer_ok": true,
       "used_tools": [],
-      "answer": "(seven|7)",
+      "answer": "There are 7 continents on Earth: Africa, Antarctica, Asia, Europe, North America, Australia, and South America.",
       "error": null,
       "latency_ms": 0
     },
     {
       "id": "notool-005",
       "category": "no_tool",
-      "tool_selection_ok": true,
+      "tool_selection_ok": false,
       "arguments_evaluated": false,
       "arguments_ok": false,
       "answer_ok": true,
-      "used_tools": [],
-      "answer": "The answer is Shakespeare.",
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "The play \"Hamlet\" was written by William Shakespeare.",
       "error": null,
       "latency_ms": 0
     },
@@ -638,9 +641,9 @@
       "tool_selection_ok": true,
       "arguments_evaluated": false,
       "arguments_ok": false,
-      "answer_ok": true,
+      "answer_ok": false,
       "used_tools": [],
-      "answer": "The answer is Portuguese.",
+      "answer": "portunese",
       "error": null,
       "latency_ms": 0
     },
@@ -652,7 +655,7 @@
       "arguments_ok": false,
       "answer_ok": true,
       "used_tools": [],
-      "answer": "The answer is green.",
+      "answer": "The color you get when you mix blue and yellow paint is green.",
       "error": null,
       "latency_ms": 0
     },
@@ -664,7 +667,7 @@
       "arguments_ok": false,
       "answer_ok": true,
       "used_tools": [],
-      "answer": "The answer is merci.",
+      "answer": "The French translation of 'thank you' is 'merci'.",
       "error": null,
       "latency_ms": 0
     },
@@ -676,7 +679,7 @@
       "arguments_ok": false,
       "answer_ok": true,
       "used_tools": [],
-      "answer": "Au",
+      "answer": "The chemical symbol for gold is Au.",
       "error": null,
       "latency_ms": 0
     },
@@ -688,7 +691,7 @@
       "arguments_ok": false,
       "answer_ok": true,
       "used_tools": [],
-      "answer": "The answer is banana banana banana.",
+      "answer": "banana banana banana",
       "error": null,
       "latency_ms": 0
     }
