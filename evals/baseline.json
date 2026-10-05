@@ -1,0 +1,696 @@
+{
+  "schema_version": 1,
+  "backend": "recording",
+  "model": null,
+  "timestamp": "2026-10-05T08:10:05.388820+00:00",
+  "metrics": {
+    "total_cases": 50,
+    "tool_selection_accuracy": 1.0,
+    "argument_accuracy": 1.0,
+    "answer_accuracy": 1.0,
+    "latency_ms_p50": 0.0,
+    "latency_ms_p95": 0.0
+  },
+  "cases": [
+    {
+      "id": "search-001",
+      "category": "search_docs",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "According to the docs: \"Four score and seven years ago our fathers brought forth on this continent,\"",
+      "error": null,
+      "latency_ms": 3
+    },
+    {
+      "id": "search-002",
+      "category": "search_docs",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "According to the docs: \"Abraham Lincoln, November 19, 1863\"",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "search-003",
+      "category": "search_docs",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "According to the docs: \"these are Life, Liberty and the pursuit of Happiness.\"",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "search-004",
+      "category": "search_docs",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "According to the docs: \"In Congress, July 4, 1776\"",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "search-005",
+      "category": "search_docs",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "According to the docs: \"Shall I compare thee to a summer's day?\"",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "search-006",
+      "category": "search_docs",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "According to the docs: \"But thy eternal summer shall not fade\"",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "search-007",
+      "category": "search_docs",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "According to the docs: \"The Hare was much amused at the idea of running a race with the Tortoise, but\"",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "search-008",
+      "category": "search_docs",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "According to the docs: \"saying: \"I am sure they are sour.\"\"",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "search-009",
+      "category": "search_docs",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "According to the docs: \"1. Sun Tzu said: The art of war is of vital importance to the State.\"",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "search-010",
+      "category": "search_docs",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "According to the docs: \"(4) The Commander; (5) Method and discipline.\"",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "search-011",
+      "category": "search_docs",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "According to the docs: \"There is grandeur in this view of life, with its several powers, having been\"",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "search-012",
+      "category": "search_docs",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "According to the docs: \"To no one will we sell, to no one deny or delay right or justice.\"",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "search-013",
+      "category": "search_docs",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "According to the docs: \"I am the master of my fate,\"",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "search-014",
+      "category": "search_docs",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "According to the docs: \"I took the one less traveled by,\"",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "search-015",
+      "category": "search_docs",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "search_docs"
+      ],
+      "answer": "According to the docs: \"with either a waistcoat-pocket, or a watch to take out of it.\"",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "calc-001",
+      "category": "calculator",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "calculator"
+      ],
+      "answer": "The result of 12*12 is 144.",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "calc-002",
+      "category": "calculator",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "calculator"
+      ],
+      "answer": "The result of (3+4)*12 is 84.",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "calc-003",
+      "category": "calculator",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "calculator"
+      ],
+      "answer": "The result of 2**10 is 1024.",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "calc-004",
+      "category": "calculator",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "calculator"
+      ],
+      "answer": "The result of 10/4 is 2.5.",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "calc-005",
+      "category": "calculator",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "calculator"
+      ],
+      "answer": "The result of 0.15*240 is 36.",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "calc-006",
+      "category": "calculator",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "calculator"
+      ],
+      "answer": "The result of 744/8 is 93.",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "calc-007",
+      "category": "calculator",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "calculator"
+      ],
+      "answer": "The result of 45*19 is 855.",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "calc-008",
+      "category": "calculator",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "calculator"
+      ],
+      "answer": "The result of 3487+5129 is 8616.",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "calc-009",
+      "category": "calculator",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "calculator"
+      ],
+      "answer": "The result of 1024-389 is 635.",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "calc-010",
+      "category": "calculator",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "calculator"
+      ],
+      "answer": "The result of 100%7 is 2.",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "calc-011",
+      "category": "calculator",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "calculator"
+      ],
+      "answer": "The result of 9**2+3**2 is 90.",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "calc-012",
+      "category": "calculator",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "calculator"
+      ],
+      "answer": "The result of 2.5*60 is 150.",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "workday-001",
+      "category": "add_workdays",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "add_workdays"
+      ],
+      "answer": "The resulting date is 2026-10-08 (Thursday).",
+      "error": null,
+      "latency_ms": 1
+    },
+    {
+      "id": "workday-002",
+      "category": "add_workdays",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "add_workdays"
+      ],
+      "answer": "The resulting date is 2026-10-12 (Monday).",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "workday-003",
+      "category": "add_workdays",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "add_workdays"
+      ],
+      "answer": "The resulting date is 2026-10-19 (Monday).",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "workday-004",
+      "category": "add_workdays",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "add_workdays"
+      ],
+      "answer": "The resulting date is 2026-10-21 (Wednesday).",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "workday-005",
+      "category": "add_workdays",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "add_workdays"
+      ],
+      "answer": "The resulting date is 2026-10-10 (Saturday).",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "workday-006",
+      "category": "add_workdays",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "add_workdays"
+      ],
+      "answer": "The resulting date is 2026-10-09 (Friday).",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "workday-007",
+      "category": "add_workdays",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "add_workdays"
+      ],
+      "answer": "The resulting date is 2026-10-29 (Thursday).",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "workday-008",
+      "category": "add_workdays",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "add_workdays"
+      ],
+      "answer": "The resulting date is 2026-11-03 (Tuesday).",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "workday-009",
+      "category": "add_workdays",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "add_workdays"
+      ],
+      "answer": "The resulting date is 2026-11-11 (Wednesday).",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "workday-010",
+      "category": "add_workdays",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "add_workdays"
+      ],
+      "answer": "The resulting date is 2026-11-11 (Wednesday).",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "workday-011",
+      "category": "add_workdays",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "add_workdays"
+      ],
+      "answer": "The resulting date is 2026-12-25 (Friday).",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "workday-012",
+      "category": "add_workdays",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "add_workdays"
+      ],
+      "answer": "The resulting date is 2026-12-17 (Thursday).",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "workday-013",
+      "category": "add_workdays",
+      "tool_selection_ok": true,
+      "arguments_evaluated": true,
+      "arguments_ok": true,
+      "answer_ok": true,
+      "used_tools": [
+        "add_workdays"
+      ],
+      "answer": "The resulting date is 2026-10-27 (Tuesday).",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "notool-001",
+      "category": "no_tool",
+      "tool_selection_ok": true,
+      "arguments_evaluated": false,
+      "arguments_ok": false,
+      "answer_ok": true,
+      "used_tools": [],
+      "answer": "The answer is Paris.",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "notool-002",
+      "category": "no_tool",
+      "tool_selection_ok": true,
+      "arguments_evaluated": false,
+      "arguments_ok": false,
+      "answer_ok": true,
+      "used_tools": [],
+      "answer": "The answer is Mars.",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "notool-003",
+      "category": "no_tool",
+      "tool_selection_ok": true,
+      "arguments_evaluated": false,
+      "arguments_ok": false,
+      "answer_ok": true,
+      "used_tools": [],
+      "answer": "The answer is Pacific.",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "notool-004",
+      "category": "no_tool",
+      "tool_selection_ok": true,
+      "arguments_evaluated": false,
+      "arguments_ok": false,
+      "answer_ok": true,
+      "used_tools": [],
+      "answer": "(seven|7)",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "notool-005",
+      "category": "no_tool",
+      "tool_selection_ok": true,
+      "arguments_evaluated": false,
+      "arguments_ok": false,
+      "answer_ok": true,
+      "used_tools": [],
+      "answer": "The answer is Shakespeare.",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "notool-006",
+      "category": "no_tool",
+      "tool_selection_ok": true,
+      "arguments_evaluated": false,
+      "arguments_ok": false,
+      "answer_ok": true,
+      "used_tools": [],
+      "answer": "The answer is Portuguese.",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "notool-007",
+      "category": "no_tool",
+      "tool_selection_ok": true,
+      "arguments_evaluated": false,
+      "arguments_ok": false,
+      "answer_ok": true,
+      "used_tools": [],
+      "answer": "The answer is green.",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "notool-008",
+      "category": "no_tool",
+      "tool_selection_ok": true,
+      "arguments_evaluated": false,
+      "arguments_ok": false,
+      "answer_ok": true,
+      "used_tools": [],
+      "answer": "The answer is merci.",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "notool-009",
+      "category": "no_tool",
+      "tool_selection_ok": true,
+      "arguments_evaluated": false,
+      "arguments_ok": false,
+      "answer_ok": true,
+      "used_tools": [],
+      "answer": "Au",
+      "error": null,
+      "latency_ms": 0
+    },
+    {
+      "id": "notool-010",
+      "category": "no_tool",
+      "tool_selection_ok": true,
+      "arguments_evaluated": false,
+      "arguments_ok": false,
+      "answer_ok": true,
+      "used_tools": [],
+      "answer": "The answer is banana banana banana.",
+      "error": null,
+      "latency_ms": 0
+    }
+  ]
+}
