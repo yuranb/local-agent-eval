@@ -4,3 +4,7 @@
 .venv/
 __pycache__/
 evals/results.json
+
+# private learning/progress notes (kept locally, not published)
+STATUS.md
+walkthrough.md

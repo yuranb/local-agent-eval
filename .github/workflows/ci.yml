@@ -30,7 +30,7 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
       # CI has no Ollama, so the gate replays recorded model responses
-      # (currently fixtures; see DECISIONS.md D3). Tools still run for real.
+      # (real qwen2.5:7b recordings; see DECISIONS.md D3/D10). Tools still run for real.
       - name: Run eval on recordings
         run: python -m evals.run_eval --backend recording --out evals/results.json
       - name: Gate against baseline

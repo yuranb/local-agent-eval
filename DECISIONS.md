@@ -1,145 +1,185 @@
 # DECISIONS.md
 
-记录本项目中每一个"需要拍板"的决定和理由。按时间顺序追加。
+Every decision in this project that required a call, and why. Appended in
+chronological order.
 
-## D1. 本机没有 Ollama，真实模型部分全部跳过（2026-10-05）
+## D1. No Ollama on this machine — all real-model work initially skipped (2026-10-05)
 
-- 检查了 `which ollama`、`/usr/local/bin/ollama`、`/opt/homebrew/bin/ollama`、
-  `/Applications/Ollama.app`，均不存在。
-- 按规则"如果本机没装 Ollama，不要安装"，**不安装**，跳过范围里依赖真实模型的
-  两件事：范围 1 的模型验证/下载、范围 9 的真实结果表。
-- 代码仍然按"可插拔后端"写完：`OllamaBackend` 写好并做了可测的单元测试，
-  一旦装上 Ollama 就能直接跑 `evals/record.py` 和
-  `python -m evals.run_eval --backend ollama`。
+- Checked `which ollama`, `/usr/local/bin/ollama`, `/opt/homebrew/bin/ollama`,
+  `/Applications/Ollama.app` — none existed.
+- Per the rule "if Ollama is not installed locally, do not install it": **no
+  install**, and the two real-model deliverables were skipped — model
+  validation/download (scope 1) and the real results table (scope 9).
+- The code was still written with pluggable backends: `OllamaBackend` was
+  implemented with unit tests, ready to run `evals/record.py` and
+  `python -m evals.run_eval --backend ollama` the moment Ollama appeared.
 
-## D2. 模型选择（未验证，只是配置默认值）
+## D2. Model choice (unverified at the time; a config default only)
 
-- 范围 1 要求优先用本机已下载的模型，但本机没有 Ollama，无法执行 `ollama list`。
-- 于是把默认模型定为 `qwen2.5:7b`（`agent/config.py` 中），理由：
-  1. 参数量 7.6B，满足"8B 以下"；
-  2. 官方 README 明确支持 tool calling（模板里带 tools 支持）；
-  3. Apache 2.0 许可；
-  4. 中英双语，与本项目的使用场景（中文使用者、英文语料）匹配。
-- 备选 `llama3.1:8b`（正好 8B，工具调用支持成熟），写成注释，方便换。
-- **此选择未经过真实验证**，等装好 Ollama 后先 `ollama list` 看已有模型，
-  有支持的就不下载新的。
+- Scope 1 said to prefer an already-downloaded local model, but with no
+  Ollama there was no `ollama list` to run.
+- The default model was set to `qwen2.5:7b` (in `agent/config.py`), because:
+  1. 7.6B parameters, satisfies "under 8B";
+  2. the official README documents tool calling (tools support in the chat
+     template);
+  3. Apache 2.0 license;
+  4. bilingual (Chinese/English), matching this project's usage (Chinese
+     speaker, English corpus).
+- The alternative `llama3.1:8b` (exactly 8B, mature tool-calling support) is
+  kept as a comment for easy switching.
+- **This choice was unverified at the time**; the plan was to run
+  `ollama list` once Ollama was installed and reuse an existing model if one
+  fit.
 
-## D3. CI 门禁 job 的数据来源：手写 fixture 录制（2026-10-05）
+## D3. CI gate data source: hand-written fixture recordings (2026-10-05)
 
-- 范围 7 要求"CI 上没有 Ollama，所以门禁 job 用录制好的模型响应来跑"。
-- 本机没有 Ollama，**无法录制真实模型响应**。两个选项：
-  1. 门禁 job 也跳过 → 范围 7 完不成；
-  2. 用手写的 fixture 响应充当"录制"，如实标注。
-- 选了 2。具体设计：
-  - `evals/recordings/*.json`：每个 case 一份脚本化的模型回复序列
-    （理想轨迹：该调工具的回合返回工具调用，最后回合返回最终答案）。
-    由 `evals/make_recordings.py` 从 `cases.jsonl` 生成，人工可读、可改。
-  - `evals/recording.py`：`RecordingBackend` 按回合回放这些响应，循环里
-    工具是**真实执行**的，只是模型回复是脚本。
-  - `evals/baseline.json`：`run_eval --backend recording` 的真实输出。
-  - 门禁 `evals/gate.py` 只比较准确率指标，不比较延迟（不同机器延迟不可比，
-    拿延迟做门禁会随机失败——这是单独一个决定，见 D4）。
-- **这套数字的含义必须说清楚**：fixture 是"理想模型"的轨迹，所以基线指标是
-  对评测管线本身的回归检测（循环、工具分发、打分、指标计算有没有被改坏），
-  **不代表任何真实模型的能力**。装上 Ollama 后用 `evals/record.py` 重新录制，
-  baseline 换成真实录制，门禁就升级为模型回归门禁——管线代码不用改。
+- Scope 7 required "CI has no Ollama, so the gate job runs on recorded model
+  responses".
+- With no Ollama locally, **real recordings were impossible**. Two options:
+  1. skip the gate job too → scope 7 undeliverable;
+  2. use hand-written fixture responses standing in for recordings, labeled
+     honestly.
+- Option 2 was chosen. The design:
+  - `evals/recordings/*.json`: one scripted model-response sequence per case
+    (ideal trajectory: the tool call returns in the turn that needs it, the
+    final turn returns the final answer). Generated from `cases.jsonl` by
+    `evals/make_recordings.py`, human-readable and editable.
+  - `evals/recording.py`: `RecordingBackend` replays these responses
+    turn by turn; the tools are **executed for real** — only the model
+    responses are scripted.
+  - `evals/baseline.json`: the real output of `run_eval --backend recording`.
+  - The gate `evals/gate.py` compares accuracy metrics only, never latency
+    (a separate decision, D4).
+- **What these numbers mean must be crystal clear**: fixtures are an "ideal
+  model" trajectory, so the baseline is a regression check on the eval
+  pipeline itself (loop, tool dispatch, scoring, metrics) and **represents no
+  real model's capability**. Once Ollama existed, `evals/record.py` re-recorded
+  everything and the baseline became real, upgrading the gate to a model
+  regression gate — no pipeline code changed.
 
-## D4. 门禁不比较延迟，只比较三个准确率（2026-10-05）
+## D4. The gate never compares latency, only the three accuracies (2026-10-05)
 
-- 延迟取决于跑评测的机器和当时的负载，GitHub Actions 的机器和本机毫无可比性，
-  拿它当门禁只会产生随机失败。
-- 所以 `gate.py` 只比较：tool_selection_accuracy、argument_accuracy、
-  answer_accuracy 三个指标，任一低于基线就退出码 1。
-- 延迟仍然照常统计并写进结果 JSON（P50/P95），只是不参与门禁。
+- Latency depends on the machine and its load; a GitHub Actions runner and a
+  laptop are not comparable, so gating on latency would fail randomly.
+- `gate.py` therefore compares only tool_selection_accuracy,
+  argument_accuracy, and answer_accuracy; any value below baseline exits 1.
+- Latency is still measured and written to the results JSON (P50/P95); it
+  just never gates.
 
-## D5. 评测用例的语言用英文（2026-10-05）
+## D5. Eval cases are in English (2026-10-05)
 
-- docs/ 里的 10 篇语料是英文（公开领域文本，见 D6），期望答案要用
-  `contains`/`regex` 规则做机器判定，英文的子串匹配比中文分词更稳。
-- 项目文档（README、STATUS、walkthrough）用中文，代码注释和评测数据用英文，
-  这个组合最简单也最好解释。
+- The corpus in `docs/` is English (public-domain texts, see D6), and
+  expected answers are judged by machine `contains`/`regex` rules — English
+  substring matching is far more robust than Chinese word segmentation.
+- Project docs in Chinese (README, STATUS, walkthrough) with English code
+  comments and eval data was the simplest, most explainable combination
+  (later revised when the repo was prepared for publication — the public
+  docs are now English).
 
-## D6. docs/ 语料：公开领域的英文短文本，摘录并标注来源（2026-10-05）
+## D6. The `docs/` corpus: public-domain English excerpts with provenance (2026-10-05)
 
-- 10 篇全部选公有领域（public domain）文本：美国政府的文件天然无版权，
-  19 世纪及更早的文学作品在 US 已进入公有领域（Project Gutenberg 提供）。
-- 每篇只摘 1-2 段，来源和许可写进 `docs/SOURCES.md`，带原始 URL。
-- 摘录是我从公开领域原文转录的短段落；SOURCES.md 里注明"为摘录版"，
-  保证透明。
+- All texts are public domain: US government documents are copyright-free by
+  nature, and 19th-century-and-earlier literature is out of copyright in the
+  US (available via Project Gutenberg).
+- Each file is a 1–2 paragraph excerpt; provenance and license are recorded
+  in `docs/SOURCES.md` with the original URLs.
+- The excerpts were transcribed from public-domain sources; SOURCES.md notes
+  they are excerpts, for transparency.
 
-## D7. git 身份用仓库本地配置（2026-10-05）
+## D7. Repo-local git identity (2026-10-05)
 
-- 本机没有配置 git user.name / user.email，全局配置我不能动（范围外）。
-- 只在当前仓库设置 `user.name=yuhao`、`user.email=yuhao@local`，
-  不影响其他仓库，也不影响 push（本项目本来就不 push）。
+- The machine had no git user.name / user.email configured, and the global
+  config was out of scope.
+- Only this repository sets `user.name=yuhao`, `user.email=yuhao@local` —
+  no effect on other repos or on pushing.
 
-## D8. 工具错误不抛异常，返回 {"error": ...}（2026-10-05）
+## D8. Tool errors return `{"error": ...}` instead of raising (2026-10-05)
 
-- 工具执行失败（比如计算器收到非法表达式）时，agent 循环把错误字符串
-  作为工具结果返回给模型，让模型有机会纠正或换路子，而不是整个循环崩掉。
-- 这也是小模型工具调用的常见模式：把失败当作观察结果反馈回去。
-- 工具内部仍然抛 `ToolExecutionError`，由循环统一捕获打包，
-  单元测试针对异常本身断言，语义更清楚。
+- When a tool fails (e.g. the calculator gets an invalid expression), the
+  agent loop feeds the error string back to the model as the tool result,
+  giving the model a chance to correct course instead of crashing the loop.
+- This is a common pattern for small-model tool calling: treat failures as
+  observations.
+- Tools still raise `ToolExecutionError` internally; the loop catches and
+  packages it, and unit tests assert on the exception itself, which keeps
+  the semantics clean.
 
-## D9. Ollama 客户端用 httpx 同步调用，不用 SDK（2026-10-05）
+## D9. Ollama client: synchronous httpx, no SDK (2026-10-05)
 
-- Ollama 没有官方 Python SDK，第三方 `ollama-python` 只是 httpx 的薄封装。
-- 直接用 httpx POST `http://<host>/api/chat`（`stream=false`），
-  依赖少、代码短、好解释，失败模式（连接拒绝）也好测。
-- host 从环境变量 `OLLAMA_HOST` 读，默认 `http://localhost:11434`。
+- Ollama has no official Python SDK, and the third-party `ollama-python` is
+  a thin httpx wrapper anyway.
+- POSTing `http://<host>/api/chat` (`stream=false`) directly with httpx means
+  fewer dependencies, less code, easier explanation, and an easily testable
+  failure mode (connection refused).
+- The host comes from `OLLAMA_HOST`, defaulting to `http://localhost:11434`.
 
-## D10. Ollama 装好后执行解锁步骤，D2 的默认模型被证实可用（2026-10-05 上午）
+## D10. Ollama installed — unlock steps executed, D2's default model confirmed (2026-10-05, morning)
 
-- 本机装好 Ollama 0.35.1，`ollama list` 确认 `qwen2.5:7b`（7.6B，Q4_K_M
-  量化）已下载，与 D2 预先写的默认值一致，没有换模型。
-- 按 STATUS.md 的解锁步骤执行：
-  1. `python -m evals.record --model qwen2.5:7b` → 50/50 条全部录制成功，
-     无一条以循环错误结束（退出码 0）；
+- Ollama 0.35.1 installed; `ollama list` confirmed `qwen2.5:7b` (7.6B, Q4_K_M
+  quantization) already downloaded — exactly D2's pre-written default, no
+  model change.
+- Executed the unlock steps from STATUS.md:
+  1. `python -m evals.record --model qwen2.5:7b` → 50/50 cases recorded, none
+     ending in a loop error (exit code 0);
   2. `python -m evals.run_eval --backend recording --out evals/baseline.json`
-     → 用真实录制重建门禁基线。
-- fixture 录制被真实录制覆盖；fixture 本身仍可随时用
-  `python -m evals.make_recordings.py` 重新生成，旧版本也在 git 历史里。
-- 门禁语义随之升级：从"管线回归检测"变成"真实模型回归门禁"——
-  以后改 prompt、换模型、改工具，只要重录就能看出能力涨跌。
+     → the gate baseline rebuilt from real recordings.
+- Fixture recordings were overwritten with real ones; fixtures can still be
+  regenerated anytime with `python -m evals.make_recordings.py`, and the old
+  version remains in git history.
+- The gate's semantics upgraded accordingly: from "pipeline regression check"
+  to "real-model regression gate" — change a prompt, model, or tool, re-record,
+  and the gate shows the capability delta.
 
-## D11. 共享本机 Ollama 的另一个进程导致首次录制几乎停滞（2026-10-05 上午）
+## D11. Another process sharing the local Ollama server nearly stalled the first recording (2026-10-05, morning)
 
-- 第一次后台录制启动后发现机器上有**另一个项目**的评测进程同时对同一台
-  Ollama 服务器发请求（最多 4 个并发连接），我的请求被排队，约 100 秒才
-  完成一条，且 first case 迟迟无产出。
-- 处理：
-  1. 给 `agent/llm.py` 补了 `httpx.TimeoutException` 的翻译（此前只有
-     ConnectError 被翻译，读超时会以裸异常打崩录制脚本）；
-  2. 重跑时 `OLLAMA_TIMEOUT=900` + `python -u`（无缓冲，进度可见）；
-  3. 只观察系统状态（lsof 端口占用），不读不改对方项目的任何文件。
-- **对本报告数字的影响**：录制和 live 评测期间该进程仍在运行，
-  延迟数字（P50/P95）是"共享服务器下的真实值"，会偏高且波动；
-  三个准确率不受影响（推理结果与排队时间无关）。
+- Shortly after the first background recording started, an eval process from
+  **another project** was observed hitting the same Ollama server (up to 4
+  concurrent connections); my requests queued to ~100 s per case and the
+  first case produced nothing for a long time.
+- Handling:
+  1. added translation for `httpx.TimeoutException` in `agent/llm.py`
+     (previously only ConnectError was translated; a read timeout would crash
+     the recording script with a bare exception);
+  2. re-ran with `OLLAMA_TIMEOUT=900` + `python -u` (unbuffered, progress
+     visible);
+  3. only observed system state (lsof on the port); never read or modified
+     the other project's files.
+- **Effect on the numbers**: that process was still running during the
+  recording and the first live eval, so latency (P50/P95) from those runs is
+  "real value under a shared server" — inflated and noisy. The three
+  accuracies are unaffected (inference results are independent of queueing).
 
-## D12. 参数比较忽略格式空白；工具选择保持严格列表相等（2026-10-05 上午）
+## D12. Argument comparison ignores formatting whitespace; tool selection stays strict list equality (2026-10-05, morning)
 
-- 真实模型的 7/12 条 calculator 用例参数"失败"纯粹是 `744 / 8` vs
-  `744/8` 的空格差异——语义完全相同。把这种算错是打分器的缺陷，
-  会让 headline 数字（参数准确率 0.425 → 0.575）严重失真。
-- 修法：`evals/scoring.py::_canonical` 在大小写归一化之外去掉**全部**
-  空白。词的选择和顺序仍然敏感，所以 15 条 search 的查询改写照样失败，
-  没有用宽松度掩盖真实错误。
-- 反向决定：**工具选择**保持严格列表相等（`sorted(expected) ==
-  sorted(used)`），模型对同一工具的**重复调用算失败**（真实案例
-  calc-004：同一轮连调两次 calculator）。理由：重复调用是真实的延迟
-  浪费和混乱信号，回归门禁应该暴露它；此前文档里"集合相等"的说法与
-  代码不符，已把文档改成与代码一致的"列表严格相等"。
+- In the real model's first recording run, 7 of 12 calculator cases "failed"
+  purely on whitespace (`744 / 8` vs `744/8`) — semantically identical.
+  Scoring those as failures is a scorer defect that badly distorts the
+  headline number (argument accuracy 0.425 → 0.575 after the fix).
+- Fix: `evals/scoring.py::_canonical` strips **all** whitespace in addition
+  to case normalization. Word choice and order remain sensitive, so the 15
+  search queries that get rephrased still fail — no real error is masked by
+  leniency.
+- The opposite call: **tool selection** keeps strict list equality
+  (`sorted(expected) == sorted(used)`), and **duplicate calls of the same
+  tool count as failure** (real case calc-004: calculator called twice in one
+  turn). Rationale: duplicate calls are real wasted latency and a confusion
+  signal the gate should expose. Earlier docs said "set equality", which did
+  not match the code; the docs were corrected to the code's "strict list
+  equality".
 
-## D13. results_live.json 进 git，README/STATUS 采用空闲服务器重跑的数字（2026-10-05 中午）
+## D13. results_live.json committed; README/STATUS use the clean idle-server rerun (2026-10-05, midday)
 
-- 第一次 live 评测（17:28Z）受另一进程争抢影响：两条环境失败、P50 虚高
-  一倍。该进程结束后确认 `/api/ps` 为空、无其他连接，重跑至
-  `evals/results_live.json`（18:29Z），零环境失败。
-- 结果文件**提交进 git**：README 结果表的每个数字都要求可追溯到落盘的
-  脚本输出，这个文件就是那份证据。`evals/results.json` 仍是本地临时
-  产物、保持 gitignore（门禁在 CI 里现场生成它）。
-- README/STATUS 的 live 数字全部改用这次干净运行：
-  0.940 / 0.550 / 0.820，P50 5 975 ms / P95 16 536 ms。
-- 参数准确率按工具列出（search 0/15、calculator 10/12、workdays 12/13），
-  并写明 search 0/15 的口径原因：评分要求查询词与期望逐字一致（忽略
-  大小写和空白后仍需同词同序），模型每次都会改写查询词。
+- The first live eval (17:28Z) suffered contention from that other process:
+  two environment failures and a P50 inflated ~2×. After it ended, `/api/ps`
+  was verified empty with no other connections, and the eval was re-run into
+  `evals/results_live.json` (18:29Z) with zero environment failures.
+- The results file is **committed to git**: every number in the README
+  results tables must be traceable to script output on disk — this file is
+  that evidence. `evals/results.json` remains a local throwaway and
+  gitignored (the gate generates it fresh in CI).
+- README/STATUS live numbers all switched to the clean run:
+  0.940 / 0.550 / 0.820, P50 5,975 ms / P95 16,536 ms.
+- Argument accuracy is broken out per tool (search 0/15, calculator 10/12,
+  workdays 12/13), with the reason search is 0/15 stated: the scorer requires
+  the query verbatim (same words, same order even after case/whitespace
+  normalization), and the model rephrases every time.
