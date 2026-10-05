@@ -1,5 +1,7 @@
 # local-agent-eval
 
+[![CI](https://github.com/yuranb/local-agent-eval/actions/workflows/ci.yml/badge.svg)](https://github.com/yuranb/local-agent-eval/actions/workflows/ci.yml)
+
 An AI assistant that runs entirely on a laptop: a small local Ollama model
 (qwen2.5:7b) completes tasks via tool calling (search local documents,
 arithmetic, workday date math), with a 50-case evaluation suite wired into
@@ -7,8 +9,9 @@ GitHub Actions as a regression gate.
 
 **Status: the eval suite is complete. All 50 cases have been run against the
 real model — numbers are in the tables below. The Docker image has never been
-built (no Docker on this machine), and the GitHub Actions workflow has not
-run yet (no remote existed when it was written) — no CI result is claimed.**
+built (no Docker on this machine). CI runs on GitHub Actions on every push: a
+pytest job and an eval regression gate that replays the recorded model
+responses and compares them against evals/baseline.json.**
 
 The 50 eval cases were **drafted with AI assistance (Claude Code)** and are
 the project owner's responsibility; as of 2026-10-05 they have not been
@@ -233,8 +236,10 @@ Dockerfile          API container (never built — no Docker on this machine)
    (see provenance note above); the dataset consistency tests are the
    machine-checked defense.
 2. **The Docker image has never been built** — the Dockerfile is unverified.
-3. **The GitHub Actions workflow has not run yet** (no remote existed when it
-   was written); no CI result is claimed anywhere in this README.
+3. **The CI gate replays fixed recordings.** It catches regressions in the
+   tools, agent loop and scoring code, not drift in the model itself. After
+   changing the model or prompt, re-record with evals/record.py and rebuild
+   the baseline.
 4. **Strict scoring rubric**: search argument accuracy (0/15) reflects
    verbatim query matching, not retrieval failure — 9/15 of those cases still
    end with correct answers.
