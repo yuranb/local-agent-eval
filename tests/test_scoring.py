@@ -69,6 +69,20 @@ def test_arguments_whitespace_and_case_insensitive():
     assert arguments_ok({"search_docs": {"query": "four score"}}, calls)
 
 
+def test_arguments_ignore_formatting_whitespace_in_expressions():
+    # Real model behaviour (qwen2.5:7b): spaces around operators. Formatting
+    # is not an argument error; the semantics are identical.
+    calls = [call("calculator", expression="744 / 8")]
+    assert arguments_ok({"calculator": {"expression": "744/8"}}, calls)
+
+
+def test_arguments_whitespace_removal_does_not_forgive_reordered_words():
+    calls = [call("search_docs", query="Address Gettysburg first words")]
+    assert not arguments_ok(
+        {"search_docs": {"query": "Gettysburg Address first words"}}, calls
+    )
+
+
 # --------------------------------------------------------------------------
 # answer rules
 # --------------------------------------------------------------------------

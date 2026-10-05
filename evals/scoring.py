@@ -15,14 +15,16 @@ def normalize_text(value: str) -> str:
 def _canonical(value) -> str:
     """Canonical form of an argument value for comparison.
 
-    Numbers compare numerically ("3" == 3), everything else as normalized
-    text. This lets the dataset say days: 3 while a model might send "3".
+    Numbers compare numerically ("3" == 3). Text ignores case and ALL
+    whitespace, so an expression like "744 / 8" matches "744/8" — formatting
+    differences are not argument errors. Word choice and order still matter,
+    so paraphrased search queries still fail.
     """
     if isinstance(value, bool):
-        return normalize_text(value)
+        return normalize_text(value).replace(" ", "")
     if isinstance(value, (int, float)):
         return repr(float(value))
-    text = normalize_text(value)
+    text = normalize_text(value).replace(" ", "")
     try:
         return repr(float(text))
     except ValueError:
